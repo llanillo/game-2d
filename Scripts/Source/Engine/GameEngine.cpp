@@ -56,7 +56,7 @@ void GameEngine::Render() {
     SDL_RenderPresent(Renderer);
 }
 
-void GameEngine::Update() {
+void GameEngine::Update(double ElapsedTime) {
     Counter++;
 
     DestinationRectangle->h = 64;
