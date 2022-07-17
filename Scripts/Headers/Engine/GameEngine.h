@@ -5,6 +5,7 @@ class SDL_Window;
 class SDL_Renderer;
 class SDL_Texture;
 class SDL_Rect;
+class GameObject;
 
 class GameEngine {
 public:
@@ -23,12 +24,14 @@ public:
 
 private:
 
-    int Counter = 0;
     bool bIsRunning;
+
+    const char* PlayerSpritePath = "../Assets/Sprites/Player/Player.png";
+    GameObject* Player;
+    GameObject* Enemy;
+
     SDL_Window* Window;
     SDL_Renderer* Renderer;
-
-    SDL_Texture* PlayerTexture;
     SDL_Rect* SourceRectangle, *DestinationRectangle;
 };
 
