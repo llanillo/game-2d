@@ -1,14 +1,11 @@
 #include <iostream>
 #include <chrono>
 #include <SDL.h>
-#include <SDL_image.h>
 #include "Headers/Engine/GameEngine.h"
 
-GameEngine* GameEngineClass = nullptr;
-
 int main(int argc, char* args []) {
-    GameEngineClass = new GameEngine();
-    GameEngineClass->Init("Testerino", SDL_WINDOWPOS_CENTERED,
+    auto* GameEngineClass = new GameEngine();
+    GameEngineClass->Init("Test", SDL_WINDOWPOS_CENTERED,
                           SDL_WINDOWPOS_CENTERED, 800, 600, false);
 
     auto LastTime = std::chrono::system_clock::now();
@@ -25,5 +22,6 @@ int main(int argc, char* args []) {
     }
 
     GameEngineClass->Clean();
+    delete GameEngineClass;
     return 0;
 }
