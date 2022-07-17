@@ -8,11 +8,11 @@ class SDL_Rect;
 class GameObject{
 
 public:
-    GameObject(const char* TextureSheet, SDL_Renderer* Renderer);
+    GameObject(const char* TextureSheet, SDL_Renderer* Renderer, int X, int Y);
     ~GameObject();
 
-    void Update(float DeltaTime);
-    void Render(float DeltaTime);
+    void Update(double DeltaTime);
+    void Render();
 
 private:
     int XPos;
