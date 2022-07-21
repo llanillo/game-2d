@@ -1,8 +1,10 @@
 #include "Engine/GameEngine.h"
-#include <SDL.h>
+#include "Template/GameObject.h"
+#include "World/Map/Map.h"
 #include <iostream>
-#include <SDL_image.h>
-#include <SDL_rect.h>
+#include <SDL.h>
+
+SDL_Renderer* GameEngine::Renderer = nullptr;
 
 GameEngine::GameEngine(){
 
@@ -21,54 +23,42 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
     }
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0){
-        std::cout << "Subsystems initialised...\n";
         Window = SDL_CreateWindow(Title, XPos, YPos, Width, Height, Flags);
+        Renderer = SDL_CreateRenderer(Window, -1, 0);
 
-        if(Window){
-            std::cout << "Window created\n";
-            Renderer = SDL_CreateRenderer(Window, -1, 0);
+        if(Window && Renderer){
+            bIsRunning = true;
+            SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
 
-            if(Renderer){
-                std::cout << "Renderer created\n";
-                SDL_SetRenderDrawColor(Renderer, 255, 255, 255 , 255);
-                bIsRunning = true;
-            }
-            else{
-                bIsRunning = false;
-            }
+            Player = new GameObject(PlayerSpritePath, -1, 0);
+            Enemy = new GameObject(EnemySpritePath, 49, 50);
+
+            int MapArray [MapWidth][MapHeight] = {0};
+            WorldMap = new Map(MapArray);
         }
         else{
             bIsRunning = false;
         }
     }
-
-    SDL_Surface* TmpSurface = IMG_Load("Assets/Player/Player.png");
-    PlayerTexture = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
-    SDL_FreeSurface(TmpSurface);
-
-    SourceRectangle = new SDL_Rect();
-    DestinationRectangle = new SDL_Rect();
 }
 
 void GameEngine::Render() {
     SDL_RenderClear(Renderer);
-    SDL_RenderCopy(Renderer, PlayerTexture, nullptr, DestinationRectangle);
+    WorldMap->DrawMap();
+    Player->Render();
+    Enemy->Render();
     SDL_RenderPresent(Renderer);
 }
 
 void GameEngine::Update(double ElapsedTime) {
-    Counter++;
-
-    DestinationRectangle->h = 64;
-    DestinationRectangle->w = 64;
-//    DestinationRectangle->x = Counter;
+    Player->Update(ElapsedTime);
+    Enemy->Update(ElapsedTime);
 }
 
 void GameEngine::Clean() {
     SDL_DestroyWindow(Window);
     SDL_DestroyRenderer(Renderer);
     SDL_Quit();
-    std::cout << "Game Cleaned\n";
 }
 
 void GameEngine::HandleEvents(){

@@ -6,6 +6,7 @@ class SDL_Renderer;
 class SDL_Texture;
 class SDL_Rect;
 class GameObject;
+class Map;
 
 class GameEngine {
 public:
@@ -20,6 +21,9 @@ public:
     void Render();
     void Clean();
 
+    static SDL_Renderer* Renderer;
+    const static int TileSize = 64;
+
     inline bool IsRunning() const { return bIsRunning; }
 
 private:
@@ -27,11 +31,13 @@ private:
     bool bIsRunning;
 
     const char* PlayerSpritePath = "../Assets/Sprites/Player/Player.png";
+    const char* EnemySpritePath = "../Assets/Sprites/Enemy/Enemy.png";
+
+    Map* WorldMap;
     GameObject* Player;
     GameObject* Enemy;
 
     SDL_Window* Window;
-    SDL_Renderer* Renderer;
     SDL_Rect* SourceRectangle, *DestinationRectangle;
 };
 
