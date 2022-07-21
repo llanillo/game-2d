@@ -8,7 +8,7 @@ class SDL_Rect;
 class GameObject{
 
 public:
-    GameObject(const char* TextureSheet, SDL_Renderer* Renderer, int X, int Y);
+    GameObject(const char* TextureSheet, int X, int Y);
     ~GameObject();
 
     void Update(double DeltaTime);
@@ -20,7 +20,6 @@ private:
 
     SDL_Texture* Texture;
     SDL_Rect* SourceRect, *DestRect;
-    SDL_Renderer* Renderer;
 };
 
 #endif //INC_2D_GAMEOBJECT_H
