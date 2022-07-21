@@ -1,10 +1,19 @@
 #include "Engine/TextureManager.h"
+#include "Engine/GameEngine.h"
 #include "SDL_image.h"
 #include "SDL.h"
 
-SDL_Texture* TextureManager::LoadTexture(const char* Texture, SDL_Renderer* Renderer){
+SDL_Texture* TextureManager::LoadTexture(const char* Texture){
+    SDL_Texture* Output = nullptr;
     SDL_Surface* TempSurface = IMG_Load(Texture);
-    SDL_Texture* Output = SDL_CreateTextureFromSurface(Renderer, TempSurface);
-    SDL_FreeSurface(TempSurface);
+
+    if(TempSurface){
+        Output = SDL_CreateTextureFromSurface(GameEngine::Renderer, TempSurface);
+        SDL_FreeSurface(TempSurface);
+    }
     return Output;
+}
+
+void TextureManager::Draw(SDL_Texture* Texture, SDL_Rect* SourceRect, SDL_Rect* DestRect) {
+    SDL_RenderCopy(GameEngine::Renderer, Texture, SourceRect, DestRect);
 }
