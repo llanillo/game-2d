@@ -1,14 +1,16 @@
-#include "Engine/GameEngine.h"
-#include "Template/GameObject.h"
-#include "World/Map/Map.h"
+#include "System/Engine/GameEngine.h"
+#include "System/Engine/Manager.h"
+#include "System/Template/Entity.h"
+#include "System/Components/PositionComponent.h"
+#include "System/World/Map/Map.h"
+#include "SDL.h"
 #include <iostream>
-#include <SDL.h>
 
 SDL_Renderer* GameEngine::Renderer = nullptr;
 
 GameEngine::GameEngine(){
-
-
+    MainManager = new Manager();
+    NewPlayer = &MainManager->AddEntity();
 }
 
 GameEngine::~GameEngine(){
@@ -35,6 +37,8 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
 
             int MapArray [MapWidth][MapHeight] = {0};
             WorldMap = new Map(MapArray);
+
+            NewPlayer->AddComponent<PositionComponent>();
         }
         else{
             bIsRunning = false;
@@ -44,15 +48,18 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
 
 void GameEngine::Render() {
     SDL_RenderClear(Renderer);
-    WorldMap->DrawMap();
-    Player->Render();
-    Enemy->Render();
+    WorldMap->Draw();
+    Player->Draw();
+    Enemy->Draw();
     SDL_RenderPresent(Renderer);
 }
 
 void GameEngine::Update(double ElapsedTime) {
     Player->Update(ElapsedTime);
     Enemy->Update(ElapsedTime);
+    MainManager->Update(ElapsedTime);
+//    std::cout << NewPlayer->GetComponent<PositionComponent>().GetXPos() << ", " <<
+//        NewPlayer->GetComponent<PositionComponent>().GetYPos() << '\n';
 }
 
 void GameEngine::Clean() {

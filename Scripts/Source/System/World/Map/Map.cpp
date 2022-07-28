@@ -1,14 +1,14 @@
-#include "World/Map/Map.h"
-#include "Engine/TextureManager.h"
-#include "Engine/GameEngine.h"
-#include <SDL_image.h>
+#include "System/World/Map/Map.h"
+#include "System/Texture/TextureManager.h"
+#include "System/Engine/GameEngine.h"
+#include "SDL_image.h"
 
 Map::Map(int Array[MapWidth][MapHeight]){
     DirtTexture = TextureManager::LoadTexture(DirtTexturePath);
     GrassTexture = TextureManager::LoadTexture(GrassTexturePath);
     WaterTexture = TextureManager::LoadTexture(WaterTexturePath);
 
-    LoadMap(Array);
+    Load(Array);
 
     SourceRect = new SDL_Rect();
     DestRect = new SDL_Rect();
@@ -23,7 +23,7 @@ Map::~Map(){
 
 }
 
-void Map::DrawMap(){
+void Map::Draw(){
     for (int i = 0; i < MapWidth; ++i) {
         for (int j = 0; j < MapHeight; ++j) {
 
@@ -47,7 +47,7 @@ void Map::DrawMap(){
     }
 }
 
-void Map::LoadMap(int Array[MapWidth][MapHeight]){
+void Map::Load(int Array[MapWidth][MapHeight]){
     for (unsigned int i = 0; i < MapWidth; ++i) {
         for (int j = 0; j < MapHeight; ++j) {
             MapArray[i][j] = Array[i][j];

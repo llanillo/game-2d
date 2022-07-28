@@ -13,8 +13,8 @@ public:
     explicit Map(int Array[MapWidth][MapHeight]);
     ~Map();
 
-    void LoadMap(int Array[MapWidth][MapHeight]);
-    void DrawMap();
+    void Load(int Array[MapWidth][MapHeight]);
+    void Draw();
 
 private:
     const char* DirtTexturePath = "../Assets/Sprites/World/Map/Dirt.png";

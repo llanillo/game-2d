@@ -1,18 +1,22 @@
 #ifndef INC_2D_GAMEOBJECT_H
 #define INC_2D_GAMEOBJECT_H
 
+#include "System/Template/Object.h"
+
 class SDL_Renderer;
 class SDL_Texture;
 class SDL_Rect;
 
-class GameObject{
+class GameObject : public Object{
 
 public:
     GameObject(const char* TextureSheet, int X, int Y);
     ~GameObject();
 
-    void Update(double DeltaTime);
-    void Render();
+    void Init() override;
+    void Draw() override;
+    void Destroy() override;
+    void Update(double DeltaTime) override;
 
 private:
     int XPos;

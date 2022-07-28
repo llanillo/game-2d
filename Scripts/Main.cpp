@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <SDL.h>
-#include "Headers/Engine/GameEngine.h"
+#include "System/Engine/GameEngine.h"
 
 int main(int argc, char* args []) {
     auto* GameEngineClass = new GameEngine();

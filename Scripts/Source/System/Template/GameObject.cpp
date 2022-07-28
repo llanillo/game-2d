@@ -1,7 +1,7 @@
-#include "Template/GameObject.h"
-#include "Engine/GameEngine.h"
-#include "Engine/TextureManager.h"
-#include <SDL.h>
+#include "System/Template/GameObject.h"
+#include "System/Engine/GameEngine.h"
+#include "System/Texture/TextureManager.h"
+#include "SDL.h"
 
 GameObject::GameObject(const char* TextureSheet, int X, int Y){
     XPos = X;
@@ -16,7 +16,10 @@ GameObject::~GameObject(){
 
 }
 
-void GameObject::Render() {
+void GameObject::Init() {
+}
+
+void GameObject::Draw() {
     SDL_RenderCopy(GameEngine::Renderer, Texture, nullptr, DestRect);
 }
 
@@ -34,4 +37,7 @@ void GameObject::Update(double DeltaTime){
     DestRect->w = SourceRect->w * 2;
     DestRect->h = SourceRect->h * 2;
 
+}
+
+void GameObject::Destroy() {
 }
