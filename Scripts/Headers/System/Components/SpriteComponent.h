@@ -7,7 +7,7 @@ class SDL_Texture;
 class PositionComponent;
 class SDL_Rect;
 
-class SpriteComponent : public Object{
+class SpriteComponent : public Component{
 
     PositionComponent* Position;
     SDL_Texture* Texture;
@@ -15,11 +15,14 @@ class SpriteComponent : public Object{
 
 public:
 
-    SpriteComponent() = default;
-    SpriteComponent(const char* path);
+    SpriteComponent();
+    explicit SpriteComponent(const char* path);
 
-    ~SpriteComponent() = default;
+    void Init() override;
+    void Update(double DeltaTime) override;
+    void Draw() override;
 
+    void SetTexture(const char* path);
 };
 
 #endif //INC_2D_SPRITECOMPONENT_H
