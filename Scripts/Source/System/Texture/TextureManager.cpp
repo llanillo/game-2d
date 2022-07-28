@@ -1,5 +1,5 @@
-#include "Engine/TextureManager.h"
-#include "Engine/GameEngine.h"
+#include "System/Texture/TextureManager.h"
+#include "System/Engine/GameEngine.h"
 #include "SDL_image.h"
 #include "SDL.h"
 
