@@ -14,7 +14,7 @@ using ComponentBitSet = std::bitset<MaxComponents>;
 class Entity : public Object{
 
 private:
-    bool bIsActive = false;
+    bool bIsActive = true;
 
     std::vector<std::unique_ptr<Component>> Components;
 
@@ -32,6 +32,9 @@ public:
         return ComponentBitSet[Component::GetComponentTypeId<T>()];
     }
 
+    /*
+     * Creates a component with the arguments and add it to th entity
+     */
     template <typename T, typename... TArgs> T& AddComponent(TArgs&&... Args){
         T* ComponentType (new T(std::forward<TArgs>(Args)...));
         ComponentType->Entity = this;
