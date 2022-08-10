@@ -13,6 +13,9 @@ class PositionComponent: public Component{
 
 public:
 
+    PositionComponent();
+    PositionComponent(int X, int Y);
+
     void Init() override;
     void Update(double DeltaTime) override;
 
