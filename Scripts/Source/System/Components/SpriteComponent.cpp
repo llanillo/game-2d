@@ -19,13 +19,12 @@ void SpriteComponent::Init() {
 
     SourceRect->x = SourceRect->y = 0;
     SourceRect->w = SourceRect->h = GameEngine::TileSize / 2;
-
     DestRect->w = DestRect->h = GameEngine::TileSize;
 }
 
 void SpriteComponent::Update(double DeltaTime) {
-    DestRect->x = Position->GetXPos();
-    DestRect->y = Position->GetYPos();
+    DestRect->x = Position->GetXPos() * static_cast<int>(DeltaTime);
+    DestRect->y = Position->GetYPos() * static_cast<int>(DeltaTime);
 }
 
 void SpriteComponent::Draw() {
