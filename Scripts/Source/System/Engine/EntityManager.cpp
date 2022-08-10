@@ -1,38 +1,41 @@
 #include <algorithm>
-#include "System/Engine/Manager.h"
+#include "System/Engine/EntityManager.h"
 #include "System/Template/Entity.h"
 
-void Manager::Init() {
-
+void EntityManager::Init() {
+    for(auto& Entity : Entities){
+        Entity->Init();
+    }
 }
 
-void Manager::Update(double DeltaTime){
-
+void EntityManager::Update(double DeltaTime){
     for(auto& Entity : Entities){
         Entity->Update(DeltaTime);
     }
 }
 
-void Manager::Draw() {
+void EntityManager::Draw() {
     for(auto& Entity : Entities){
         Entity->Draw();
     }
 }
 
-void Manager::Refresh(){
+void EntityManager::Refresh(){
     Entities.erase(std::remove_if(std::begin(Entities), std::end(Entities), [](const std::unique_ptr<Entity> &MEntity){
         return !MEntity->IsActive();
     }),
     std::end(Entities));
 }
 
-Entity& Manager::AddEntity() {
+Entity& EntityManager::AddEntity() {
     auto* Output = new Entity();
     std::unique_ptr<Entity> UniquePtr(Output);
     Entities.emplace_back(std::move(UniquePtr));
     return *Output;
 }
 
-void Manager::Destroy() {
-
+void EntityManager::Destroy() {
+    for(auto& Entity : Entities){
+        Entity->Destroy();
+    }
 }

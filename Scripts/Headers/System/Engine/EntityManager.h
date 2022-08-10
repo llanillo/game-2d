@@ -1,5 +1,5 @@
-#ifndef INC_2D_MANAGER_H
-#define INC_2D_MANAGER_H
+#ifndef INC_2D_ENTITYMANAGER_H
+#define INC_2D_ENTITYMANAGER_H
 
 #include <vector>
 #include <memory>
@@ -7,7 +7,7 @@
 
 class Entity;
 
-class Manager : public Object{
+class EntityManager : public Object{
 
     std::vector<std::unique_ptr<Entity>> Entities;
 
@@ -22,4 +22,4 @@ public:
     Entity& AddEntity();
 
 };
-#endif //INC_2D_MANAGER_H
+#endif //INC_2D_ENTITYMANAGER_H
