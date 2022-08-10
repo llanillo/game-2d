@@ -6,7 +6,7 @@ class SDL_Renderer;
 class SDL_Texture;
 class SDL_Rect;
 class GameObject;
-class Manager;
+class EntityManager;
 class Entity;
 class Map;
 
@@ -33,16 +33,13 @@ private:
     bool bIsRunning;
 
     const char* PlayerSpritePath = "../Assets/Sprites/Player/Player.png";
-    const char* EnemySpritePath = "../Assets/Sprites/Enemy/Enemy.png";
 
-    Manager* MainManager;
+    EntityManager* MainManager;
     Map* WorldMap;
-    Entity* NewPlayer;
-    GameObject* Player;
-    GameObject* Enemy;
+    Entity* Player;
 
     SDL_Window* Window;
-    SDL_Rect* SourceRectangle, *DestinationRectangle;
+    SDL_Rect* SourceRect, *DestRect;
 };
 
 

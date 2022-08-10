@@ -1,7 +1,8 @@
 #include "System/Engine/GameEngine.h"
-#include "System/Engine/Manager.h"
-#include "System/Template/Entity.h"
+#include "System/Engine/EntityManager.h"
 #include "System/Components/PositionComponent.h"
+#include "System/Components/SpriteComponent.h"
+#include "System/Template/Entity.h"
 #include "System/World/Map/Map.h"
 #include "SDL.h"
 #include <iostream>
@@ -9,8 +10,11 @@
 SDL_Renderer* GameEngine::Renderer = nullptr;
 
 GameEngine::GameEngine(){
-    MainManager = new Manager();
-    NewPlayer = &MainManager->AddEntity();
+    MainManager = new EntityManager();
+    Player = &MainManager->AddEntity();
+
+    SourceRect = new SDL_Rect();
+    DestRect = new SDL_Rect();
 }
 
 GameEngine::~GameEngine(){
@@ -32,13 +36,11 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
             bIsRunning = true;
             SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
 
-            Player = new GameObject(PlayerSpritePath, -1, 0);
-            Enemy = new GameObject(EnemySpritePath, 49, 50);
-
             int MapArray [MapWidth][MapHeight] = {0};
-            WorldMap = new Map(MapArray);
 
-            NewPlayer->AddComponent<PositionComponent>();
+            WorldMap = new Map(MapArray);
+            Player->AddComponent<PositionComponent>(100, 100);
+            Player->AddComponent<SpriteComponent>(PlayerSpritePath);
         }
         else{
             bIsRunning = false;
@@ -49,17 +51,13 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
 void GameEngine::Render() {
     SDL_RenderClear(Renderer);
     WorldMap->Draw();
-    Player->Draw();
-    Enemy->Draw();
+    MainManager->Draw();
     SDL_RenderPresent(Renderer);
 }
 
 void GameEngine::Update(double ElapsedTime) {
-    Player->Update(ElapsedTime);
-    Enemy->Update(ElapsedTime);
+    MainManager->Refresh();
     MainManager->Update(ElapsedTime);
-//    std::cout << NewPlayer->GetComponent<PositionComponent>().GetXPos() << ", " <<
-//        NewPlayer->GetComponent<PositionComponent>().GetYPos() << '\n';
 }
 
 void GameEngine::Clean() {
