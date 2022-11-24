@@ -19,8 +19,10 @@ Map::Map(int Array[MapWidth][MapHeight]){
     DestRect->x = DestRect->y = 0;
 }
 
-Map::~Map(){
-
+Map::~Map() {
+    SDL_DestroyTexture(GrassTexture);
+    SDL_DestroyTexture(DirtTexture);
+    SDL_DestroyTexture(WaterTexture);
 }
 
 void Map::Draw(){
