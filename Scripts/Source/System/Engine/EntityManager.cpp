@@ -23,13 +23,12 @@ void EntityManager::Draw() {
 void EntityManager::Refresh(){
     Entities.erase(std::remove_if(std::begin(Entities), std::end(Entities), [](const std::unique_ptr<Entity> &MEntity){
         return !MEntity->IsActive();
-    }),
-    std::end(Entities));
+    }), std::end(Entities));
 }
 
 Entity& EntityManager::AddEntity() {
     auto* Output = new Entity();
-    std::unique_ptr<Entity> UniquePtr(Output);
+    std::unique_ptr<Entity> UniquePtr{Output};
     Entities.emplace_back(std::move(UniquePtr));
     return *Output;
 }

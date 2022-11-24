@@ -4,25 +4,33 @@
 #include "../Template/Component.h"
 
 class SDL_Texture;
-class PositionComponent;
+class TransformComponent;
 class SDL_Rect;
 
 class SpriteComponent : public Component{
 
-    PositionComponent* Position;
+    TransformComponent* Transform;
     SDL_Texture* Texture;
-    SDL_Rect* SourceRect, *DestRect;
+    SDL_Rect* SourceRect;
+    SDL_Rect *DestRect;
 
 public:
 
     SpriteComponent();
+
     explicit SpriteComponent(const char* path);
 
     void Init() override;
+
     void Update(double DeltaTime) override;
+
     void Draw() override;
 
     void SetTexture(const char* path);
+
+    void Destroy() override;
+
+    ~SpriteComponent() override;
 };
 
 #endif //INC_2D_SPRITECOMPONENT_H

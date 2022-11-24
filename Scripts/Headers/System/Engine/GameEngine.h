@@ -4,42 +4,49 @@
 class SDL_Window;
 class SDL_Renderer;
 class SDL_Texture;
-class SDL_Rect;
+union SDL_Event;
 class GameObject;
 class EntityManager;
 class Entity;
 class Map;
 
 class GameEngine {
+
+    bool bIsRunning;
+
+    static constexpr char* PlayerSpritePath = "../Assets/Sprites/Player/Player.png";
+
+    EntityManager* MainManager;
+
+    Map* WorldMap;
+
+    Entity* Player;
+
+    SDL_Window* Window;
+
 public:
 
     GameEngine();
+
     ~GameEngine();
 
     void Init(const char* Title, int XPos, int YPos, int Width, int Height, bool Fullscreen);
 
     void HandleEvents();
+
     void Update(double DeltaTime);
+
     void Render();
+
     void Clean();
 
     static SDL_Renderer* Renderer;
-    const static int TileSize = 64;
+
+    static SDL_Event* Event;
+
+    constexpr static int TileSize = 64;
 
     inline bool IsRunning() const { return bIsRunning; }
-
-private:
-
-    bool bIsRunning;
-
-    const char* PlayerSpritePath = "../Assets/Sprites/Player/Player.png";
-
-    EntityManager* MainManager;
-    Map* WorldMap;
-    Entity* Player;
-
-    SDL_Window* Window;
-    SDL_Rect* SourceRect, *DestRect;
 };
 
 

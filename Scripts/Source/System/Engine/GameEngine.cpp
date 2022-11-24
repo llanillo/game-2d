@@ -1,20 +1,21 @@
 #include "System/Engine/GameEngine.h"
 #include "System/Engine/EntityManager.h"
-#include "System/Components/PositionComponent.h"
+#include "System/Components/TransformComponent.h"
 #include "System/Components/SpriteComponent.h"
+#include "System/Components/ColliderComponent.h"
+#include "System/Template/Component.h"
 #include "System/Template/Entity.h"
+#include "System/World/Core/Vector2D.h"
 #include "System/World/Map/Map.h"
+#include "System/Input/KeyboardController.h"
 #include "SDL.h"
-#include <iostream>
 
 SDL_Renderer* GameEngine::Renderer = nullptr;
+SDL_Event* GameEngine::Event;
 
 GameEngine::GameEngine(){
     MainManager = new EntityManager();
     Player = &MainManager->AddEntity();
-
-    SourceRect = new SDL_Rect();
-    DestRect = new SDL_Rect();
 }
 
 GameEngine::~GameEngine(){
@@ -39,8 +40,9 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
             int MapArray [MapWidth][MapHeight] = {0};
 
             WorldMap = new Map(MapArray);
-            Player->AddComponent<PositionComponent>(100, 100);
+            Player->AddComponent<TransformComponent>(100, 100);
             Player->AddComponent<SpriteComponent>(PlayerSpritePath);
+            Player->AddComponent<KeyboardController>();
         }
         else{
             bIsRunning = false;
@@ -50,12 +52,14 @@ void GameEngine::Init(const char *Title, int XPos, int YPos, int Width, int Heig
 
 void GameEngine::Render() {
     SDL_RenderClear(Renderer);
+    Player->Draw();
     WorldMap->Draw();
     MainManager->Draw();
     SDL_RenderPresent(Renderer);
 }
 
 void GameEngine::Update(double ElapsedTime) {
+    Player->Update(ElapsedTime);
     MainManager->Refresh();
     MainManager->Update(ElapsedTime);
 }
