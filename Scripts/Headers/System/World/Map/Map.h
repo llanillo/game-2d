@@ -9,11 +9,11 @@ const int MapHeight = 25;
 
 class Map{
 
-    const char* DirtTexturePath = "../Assets/Sprites/World/Map/Dirt.png";
+    const char* DirtTexturePath = "../Resources/Sprites/World/Map/Dirt.png";
 
-    const char* GrassTexturePath = "../Assets/Sprites/World/Map/Grass.png";
+    const char* GrassTexturePath = "../Resources/Sprites/World/Map/Grass.png";
 
-    const char* WaterTexturePath = "../Assets/Sprites/World/Map/Water.png";
+    const char* WaterTexturePath = "../Resources/Sprites/World/Map/Water.png";
 
     SDL_Rect* SourceRect, *DestRect;
 
