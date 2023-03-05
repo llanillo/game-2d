@@ -14,7 +14,7 @@ class GameEngine {
 
     bool bIsRunning;
 
-    static constexpr char* PlayerSpritePath = "../Assets/Sprites/Player/Player.png";
+    static constexpr char* PlayerSpritePath = "../Resources/Sprites/Player/Player.png";
 
     EntityManager* MainManager;
 
